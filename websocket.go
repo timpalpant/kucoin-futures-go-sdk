@@ -160,7 +160,7 @@ func (as *ApiService) NewWebSocketClient(token *WebSocketTokenModel) *WebSocketC
 	wc := &WebSocketClient{
 		wg:            &sync.WaitGroup{},
 		done:          make(chan struct{}),
-		errors:        make(chan error, 1),
+		errors:        make(chan error, 2),
 		pongs:         make(chan string, 1),
 		acks:          make(chan string, 1),
 		token:         token,
