@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	kumex "github.com/Kucoin/kucoin-futures-go-sdk"
+	kumex "github.com/timpalpant/kucoin-futures-go-sdk"
 )
 
 func main() {
