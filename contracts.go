@@ -27,6 +27,7 @@ type ContractsModel struct {
 	QuoteCurrency           string  `json:"quoteCurrency"`
 	RiskStep                int     `json:"riskStep"`
 	RootSymbol              string  `json:"rootSymbol"`
+	SettleCurrency          string  `json:"settleCurrency"`
 	Status                  string  `json:"status"`
 	Symbol                  string  `json:"symbol"`
 	TakerFeeRate            float32 `json:"takerFeeRate"`
