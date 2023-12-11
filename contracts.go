@@ -41,6 +41,10 @@ type ContractsModel struct {
 	FundingFeeRate          float64 `json:"fundingFeeRate"`
 	PredictedFundingFeeRate float64 `json:"predictedFundingFeeRate"`
 	NextFundingRateTime     int64   `json:"nextFundingRateTime"`
+	FirstOpenDate           int64   `json:"firstOpenDate"`
+	ExpireDate              int64   `json:"expireDate"`
+	SettleDate              int64   `json:"settleDate"`
+	SettlementFee           float64 `json:"settlementFee"`
 }
 
 type ContractsModels []*ContractsModel
