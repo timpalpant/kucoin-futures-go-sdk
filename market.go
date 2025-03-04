@@ -1,6 +1,7 @@
 package kumex
 
 import (
+	"github.com/json-iterator/go"
 	"net/http"
 )
 
@@ -225,5 +226,37 @@ type FundingRateModel struct {
 // FundingRate Get Current Funding Rate.
 func (as *ApiService) FundingRate(Symbol string) (*ApiResponse, error) {
 	req := NewRequest(http.MethodGet, "/api/v1/funding-rate/"+Symbol+"/current", nil)
+	return as.Call(req)
+}
+
+type TradeStatisticsModel struct {
+	TurnoverOf24h jsoniter.Number `json:"turnoverOf24h"`
+}
+
+// TradeStatistics Get 24h trade statistics.
+func (as *ApiService) TradeStatistics() (*ApiResponse, error) {
+	req := NewRequest(http.MethodGet, "/api/v1/trade-statistics", nil)
+	return as.Call(req)
+}
+
+type AllTickersModel []TickerItem
+
+type TickerItem struct {
+	Sequence     int64  `json:"sequence"`
+	Symbol       string `json:"symbol"`
+	Side         string `json:"side"`
+	Size         int    `json:"size"`
+	TradeID      string `json:"tradeId"`
+	Price        string `json:"price"`
+	BestBidPrice string `json:"bestBidPrice"`
+	BestBidSize  int    `json:"bestBidSize"`
+	BestAskPrice string `json:"bestAskPrice"`
+	BestAskSize  int    `json:"bestAskSize"`
+	Timestamp    int64  `json:"ts"`
+}
+
+// AllTickers Get Latest Ticker for All Contracts
+func (as *ApiService) AllTickers() (*ApiResponse, error) {
+	req := NewRequest(http.MethodGet, "/api/v1/allTickers", nil)
 	return as.Call(req)
 }

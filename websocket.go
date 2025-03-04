@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/json-iterator/go"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -131,7 +132,7 @@ type WebSocketDownstreamMessage struct {
 
 // ReadData read the data in channel.
 func (m *WebSocketDownstreamMessage) ReadData(v interface{}) error {
-	return json.Unmarshal(m.RawData, v)
+	return jsoniter.Unmarshal(m.RawData, v)
 }
 
 // A WebSocketClient represents a connection to WebSocket server.
@@ -192,7 +193,7 @@ func (wc *WebSocketClient) Connect() (<-chan *WebSocketDownstreamMessage, <-chan
 	websocket.DefaultDialer.TLSClientConfig = &tls.Config{InsecureSkipVerify: wc.skipVerifyTls}
 
 	// Connect ws server
-	websocket.DefaultDialer.ReadBufferSize = 2048000 //2000 kb
+	websocket.DefaultDialer.ReadBufferSize = 2048000 // 2000 kb
 	wc.conn, _, err = websocket.DefaultDialer.Dial(u, nil)
 	if err != nil {
 		return wc.messages, wc.errors, err
@@ -313,10 +314,10 @@ func (wc *WebSocketClient) Subscribe(channels ...*WebSocketSubscribeMessage) err
 		if err := wc.conn.WriteMessage(websocket.TextMessage, []byte(m)); err != nil {
 			return err
 		}
-		//log.Printf("Subscribing: %s, %s", c.Id, c.Topic)
+		// log.Printf("Subscribing: %s, %s", c.Id, c.Topic)
 		select {
 		case id := <-wc.acks:
-			//log.Printf("ack: %s=>%s", id, c.Id)
+			// log.Printf("ack: %s=>%s", id, c.Id)
 			if id != c.Id {
 				return errors.Errorf("Invalid ack id %s, expect %s", id, c.Id)
 			}
@@ -339,10 +340,10 @@ func (wc *WebSocketClient) Unsubscribe(channels ...*WebSocketUnsubscribeMessage)
 		if err := wc.conn.WriteMessage(websocket.TextMessage, []byte(m)); err != nil {
 			return err
 		}
-		//log.Printf("Unsubscribing: %s, %s", c.Id, c.Topic)
+		// log.Printf("Unsubscribing: %s, %s", c.Id, c.Topic)
 		select {
 		case id := <-wc.acks:
-			//log.Printf("ack: %s=>%s", id, c.Id)
+			// log.Printf("ack: %s=>%s", id, c.Id)
 			if id != c.Id {
 				return errors.Errorf("Invalid ack id %s, expect %s", id, c.Id)
 			}

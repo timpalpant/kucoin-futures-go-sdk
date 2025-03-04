@@ -1,3 +1,18 @@
+# Notice: SDK Deprecation
+
+Thank you for your support and usage of this SDK. We want to inform you that **this project is no longer actively maintained or updated**. 
+
+To ensure you have access to the latest features, improvements, and support, we recommend transitioning to our new SDK: [**KuCoin Universal SDK**](https://github.com/Kucoin/kucoin-universal-sdk).
+
+The KuCoin Universal SDK offers:
+- A unified architecture across multiple programming languages.
+- Enhanced performance and stability.
+- Continued support and updates.
+
+👉 **New SDK Repository**: [https://github.com/Kucoin/kucoin-universal-sdk](https://github.com/Kucoin/kucoin-universal-sdk)
+
+We appreciate your understanding and encourage you to migrate to the new SDK for a better development experience. Should you have any questions or require assistance, feel free to reach out to us.
+
 # Go SDK for KuMex API
 > The detailed document [https://docs.kucoin.com/futures](https://docs.kucoin.com/futures), in order to receive the latest API change notifications, please `Watch` this repository.
 
@@ -164,9 +179,9 @@ if err != nil {
     return
 }
 
-ch1 := kumex.NewSubscribeMessage("/contractMarket/ticker:XBTUSDM", false)
-ch2 := kumex.NewSubscribeMessage("/contractMarket/ticker:XBTUSDM", false)
-uch := kumex.NewUnsubscribeMessage("/contractMarket/ticker:XBTUSDM", false)
+ch1 := kumex.NewSubscribeMessage("/contractMarket/ticker:XBTUSDTM", false)
+ch2 := kumex.NewSubscribeMessage("/contractMarket/ticker:XBTUSDTM", false)
+uch := kumex.NewUnsubscribeMessage("/contractMarket/ticker:XBTUSDTM", false)
 
 if err := c.Subscribe(ch1, ch2); err != nil {
     // Handle error
@@ -191,7 +206,7 @@ for {
         log.Printf("Ticker: %s, %s, %s, %s", msg.Topic, t.Sequence, t.Price, t.Size)
         i++
         if i == 5 {
-            log.Println("Unsubscribe XBTUSDM")
+            log.Println("Unsubscribe XBTUSDTM")
             if err = c.Unsubscribe(uch); err != nil {
                 log.Printf("Error: %s", err.Error())
                 // Handle error
@@ -199,7 +214,7 @@ for {
             }
         }
         if i == 10 {
-            log.Println("Subscribe XBTUSDM")
+            log.Println("Subscribe XBTUSDTM")
             if err = c.Subscribe(ch2); err != nil {
                 log.Printf("Error: %s", err.Error())
                 // Handle error
